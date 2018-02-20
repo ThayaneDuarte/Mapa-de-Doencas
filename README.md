@@ -48,9 +48,13 @@ $ git clone https://github.com/ThayaneDuarte/Mapa-de-Doencas.git
 ```
 ### Configurar o Domínio
 Para configurar o domínio, ou seja qual IP o sistema irá usar, acesse o arquivo settings.py na pasta mapadoencas. 
+```sh
 e.g.) gedit Mapa-de-Doencas/mapadoencas/settings.py 
+```
 E acrescente o IP e DNS em ALLOWED_HOSTS
+```sh
 e.g.) ALLOWED_HOSTS = [‘www.mapadoencas.com.br’, ‘meu_IP’]
+```
 ### Executar o Sistema
 Para executar o sistema, entre na pasta que contém o arquivo manager.py
 ```sh
@@ -67,6 +71,8 @@ $ ./manager runserver <meu_IP>:<minha_porta>
 #### Acessando o Sistema
 Se não tiver um DNS associado ao ip do sistema, digite <meu_IP>:<minha_porta> na barra do navegador.
 Caso tenha um DNS, digite-o seguido da porta
+```sh
 e.g.) www.mapadoencas.com.br:<minha_porta>
+```
 Se quiser tirar a obrigatoriedade de digitar a porta após o endereço, deve-se configurar o servidor para enviar todas as solicitações que cheguem para a porta escolhida. 
  
