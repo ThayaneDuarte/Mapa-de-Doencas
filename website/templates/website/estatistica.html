@@ -1,0 +1,38 @@
+{% extends 'website/base.html' %}
+{% block title %}Estatísticas{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12" align="center">
+            <h1><strong>Estatísticas</strong></h1>
+        </div>
+        <div class="col-sm-12">
+        {% if estatisticas %}
+            <h3>Dados gerais</h3>
+            <ul>
+            {% for name,value in estatisticas.items %}
+                <li><h4><strong>{{ name }}: </strong>{{ value }}</h4></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if qtdRelatos %}
+            <h3>Dados quantidade de relatos das doenças</h3>
+            <ul>
+            {% for name,value in qtdRelatos.items %}
+                <li><h4><strong>{{ name }}: </strong>{{ value }}</h4></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if taxaRelatos %}
+            <h3>Dados variação doenças (em relação ao mês passado)</h3>
+            <ul>
+            {% for name,value in taxaRelatos.items %}
+                <li><h4><strong>{{ name }}: </strong> {% if value == 0 %}Variação desprezível.{% else %}{{ value }}%{% endif %}</h4></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

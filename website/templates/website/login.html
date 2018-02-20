@@ -1,0 +1,63 @@
+{% extends 'website/base_visitante.html' %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+        <!-- empty -->
+        </div>
+        <div class="col-sm-12 col-md-6" align="center">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                    <h3><strong>Login</strong></h3>
+                    <br>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" name="LoginForm">
+                        {% csrf_token %}
+                        {% if show_button %}
+                          <input id="id_desbloqueio" maxlength="30" value="{{show_button}}" name="desbloqueio" hidden>
+                          <button type="submit" class="btn btn-success">Pedir desbloqueio</button>
+                        {% else %}
+                         <div class="form-group">
+                              <label for="id_cpf">
+                                  CPF:
+                              </label>
+                              <div class="col-sm-12">
+                                  <input id="id_cpf" maxlength="11" name="cpf" type="text" required, minlength="1">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="id_password">
+                                  Senha:
+                              </label>
+                              <div class="col-sm-12">
+                                  <input id="id_password" maxlength="30" name="password" type="password" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="col-sm-12">
+
+                                  <button type="submit" class="btn btn-success">Login</button>
+                              </div>
+                          </div>
+                          {% endif %}
+                    </form>
+                    <br>
+                    <h6><a href="#"> Esqueci </a> a senha.</h6>
+                    <h6>Não possui uma conta? <a href="{% url 'website:cadastrarusuario' %}">Cadastre-se</a> e aproveite tudo o que temos a oferecer!</h6>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+        <!-- empty -->
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

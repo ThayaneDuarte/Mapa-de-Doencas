@@ -1,0 +1,148 @@
+{% extends base %}
+{% block mapa_ativo %}active{% endblock %}
+
+{% block body %}
+<div class="col-md-12 col-xs-12">
+    <h1 align="center">Bem vindo {{name}}</h1>
+</div>.
+<div id="mapa"  style=" margin: 0 auto; width: 95%; height: 500px; ">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Places Searchbox</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+      #target {
+        width: 345px;
+      }
+      #clikk {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-top: 11px;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 100px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="pac-input" class="controls" type="text" placeholder="Pesquisar por alguma doença">
+    <button id="clikk" onclick="searchFunction()">Pesquisar</button>
+    <div id="map"></div>
+    <script>
+      var map;
+      var markers = [];
+      var input;
+      var button_click;
+      function initAutocomplete() {
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 16,
+          mapTypeId: 'roadmap'
+        });
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				map.setCenter(initialLocation);
+			});
+		}
+        // Create the search box and link it to the UI element.
+        input = document.getElementById('pac-input');
+        button_click = document.getElementById('clikk')
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(button_click);
+
+        insertMarks();
+      }
+
+      function insertMarks() {
+      	{% for relato in relatos %}
+          markers.push(new google.maps.Marker({
+    		    position: new google.maps.LatLng({{relato.latitude}}, {{relato.longitude}}),
+    		    title: "{{relato.doenca.doenca}}",
+            map: map}
+          ));
+      	{% endfor %}
+      }
+
+      function searchFunction() {
+        var result = document.getElementById('pac-input').value;
+        if (result == "") {
+            markers.forEach(function(place) {
+            place.setMap(map);
+          });
+        } else {
+          markers.forEach(function(place) {
+            // Create a marker for each place.
+            if (place.title.toUpperCase().includes(result.toUpperCase())) {
+              place.setMap(map);
+            } else {
+              place.setMap(null);
+            }
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpGg2Z_h1oWh3M1RwG-QrpuHj7hmMvpOc&libraries=places&callback=initAutocomplete"
+         async defer></script>
+  </body>
+</div>
+{% endblock %}
+<!--script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCpGg2Z_h1oWh3M1RwG-QrpuHj7hmMvpOc"></script-->

@@ -1,0 +1,81 @@
+{% extends 'website/base_adm.html' %}
+{% block title %}Solicitações de Desbloqueio de Usuários{% endblock %}
+{% block registro_ativo %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12" align="center">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                    {% if vazio == False %}
+                        <h3><strong> Solicitações de Desbloqueio de Usuários</strong></h3>
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+                        <form action="" method="post">
+                        {% csrf_token %}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                  <th>Nome</th>
+                                  <th>Sobrenome</th>
+                                  <th>CPF</th>
+                                  <th>E-mail</th>
+                                  <th>Desbloquear</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in pedidos %}
+                                    <tr>
+                                        <td>{{ usuario.nome }}</td>
+                                        <td>{{ usuario.sobrenome }}</td>
+                                        <td>{{ usuario.cpf }}</td>
+                                        <td>{{ usuario.email }}</td>
+                                        <td>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-success" name="rmvPedidosLogin">
+                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </form>
+                    {% else %}
+                        <h3><strong>Não existe solicitação de desbloqueio de usuário.</strong></h3>
+                    {% endif %}
+
+
+                    {% if pedidos.has_other_pages %}
+                        <ul class="pagination">
+                            {% if pedidos.has_previous %}
+                                <li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in pedidos.paginator.page_range %}
+                                {% if pedidos.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if pedidos.has_next %}
+                                <li><a href="?page={{ users.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

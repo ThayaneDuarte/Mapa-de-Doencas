@@ -1,0 +1,52 @@
+{% extends 'website/base_adm.html' %}
+{% block title %}Gerenciar Orgão Saúde{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12" align="center">
+            <form class="form-horizontal" role="search" method="get" action="{% url 'website:gerenciarOrgaosSaude' %}">
+                <div class="form-group">
+                    <input type="text" size="30" class="fieldSearch" placeholder ="Digite o nome do órgão"
+                           name="q" value="{{ request.GET.q }}">
+                    <button type="submit" class="btn btn-success">Pesquisar</button>
+			    </div>
+            </form>
+        </div>
+        <div class="col-sm-12" align="center">
+            <h1><strong>Órgãos de saúde</strong></h1>
+        </div>
+        <div class="col-sm-12" align="center">
+            <a href="{% url 'website:adicionarOrgaosSaude' %}"> <button name="adicionar" class="btn btn-success">Adicionar</button></a>
+        </div>
+        {% if orgaos %}
+            {% for orgao in orgaos %}
+                <div class="col-md-12">
+                    <div class="col-sm-12 col-md-8">
+                        <ul>
+                            <li><strong>Nome: </strong>{{orgao.nome}}</li>
+                            <li><strong>CNPJ: </strong>{{orgao.cnpj}}</li>
+                            <li><strong>Email: </strong>{{orgao.email}}</li>
+                            <li><strong>Autarquia: </strong>{{orgao.autarquia}}</li>
+                            <li><strong>Sigla: </strong>{{orgao.sigla}}</li>
+                            <li><strong>Endereço: </strong>{{orgao.rua}}, {{orgao.numero}}, {{orgao.complemento}}, {{orgao.bairro}}, {{orgao.cidade}} - {{orgao.uf}}, {{orgao.pais}}, {{orgao.cep}}.</li>
+                        </ul>
+                        <br>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <a href="{% url 'website:editarOrgaoSaude' orgao.id  %}" class="btn btn-primary btn-sm" role="button"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="{% url 'website:excluirOrgaoSaude'  orgao.id %}" class="btn btn-primary btn-sm" role="button"><span class="glyphicon glyphicon-remove"></span></a>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <h1>Nenhum órgão cadastrado.</h1>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

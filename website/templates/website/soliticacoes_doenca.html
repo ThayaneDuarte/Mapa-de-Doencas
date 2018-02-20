@@ -1,0 +1,93 @@
+{% extends 'website/base_adm.html' %}
+{% block title %}Solicitações de Novas Doenças{% endblock %}
+{% block registro_ativo %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+        
+        <div class="col-sm-12 col-md-12" align="center">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                    {% if vazio == False %}
+                        <h3><strong> Solicitações de Novas Doenças</strong></h3>
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+                        <form action="" method="post">
+                        {% csrf_token %}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                  <th>Doença</th>
+                                  <th>Código</th>
+                                  <th>Gravidade</th>
+                                  <th>Descrição</th>
+                                  <th>Sintomas</th>
+                                  <th>Propagação</th>
+                                  <th>Aceitar</th>
+                                  <th>Negar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for solicitacao in solicitacoes %}
+                                    <tr>
+                                        <td>{{ solicitacao.doenca }}</td>
+                                        <td>{{ solicitacao.codigo }}</td>
+                                        <td>{{ solicitacao.gravidade }}</td>
+                                        <td>{{ solicitacao.descricao }}</td>
+                                        <td>{{ solicitacao.sintomas }}</td>
+                                        <td>{{ solicitacao.propagacao }}</td>
+                                        <td>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-success" name="{{solicitacao.codigo}}Add">
+                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="col-sm-4">
+                                                <button  class="btn btn-danger  " name="{{solicitacao.codigo}}Rmv">
+                                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </form>
+                    {% else %}
+                        <h3><strong>Não existe solicitação de nova doença.</strong></h3>
+                    {% endif %}
+
+                    
+                    {% if solicitacoes.has_other_pages %}
+                        <ul class="pagination">
+                            {% if solicitacoes.has_previous %}
+                                <li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in solicitacoes.paginator.page_range %}
+                                {% if solicitacoes.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if solicitacoes.has_next %}
+                                <li><a href="?page={{ users.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

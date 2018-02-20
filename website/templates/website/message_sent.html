@@ -1,0 +1,26 @@
+{% extends 'website/base.html' %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-0 col-md-3">
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body" align="center">
+                    <h3>
+                        {% if message %}
+                        <bold>{{message}}</bold>
+                        {% else %}
+                        <bold> Clique OK para sair </bold>
+                        {% endif %}    
+                    </h3>
+                    <a href=".."><input type="button" class="btn btn-success" value="OK"></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-0 col-md-3">
+        </div>
+    </div>
+</div>
+{% endblock %}

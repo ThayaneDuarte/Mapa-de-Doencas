@@ -1,0 +1,40 @@
+{% extends 'website/base_visitante.html' %}
+{% block title %}Cadastrar usuario{% endblock %}
+{% block registro_ativo %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-3">
+        <!-- empty -->
+        </div>
+        <div class="col-sm-12 col-md-6" align="center">
+            <div class="panel panel-default">
+                <div class="panel-body" >
+                    <h3><strong> Cadastre-se para mais funcionalidades</strong></h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'website/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <h6>Já possui uma conta? Faça <a href="{% url 'website:login' %}">login</a> e aproveite tudo o que temos a oferecer!</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+        <!-- empty -->
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

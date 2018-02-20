@@ -1,0 +1,54 @@
+{% extends 'website/base.html' %}
+{% block title %}Pesquisar{% endblock %}
+
+{% block body %}
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<div class="container-fluid">
+    <div class="row">
+         <div class="col-sm-0 col-md-3">
+	 <!-- empty -->
+         </div>
+
+        <div class="col-sm-12 col-md-6" align="center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2><strong>Pesquisar Doenças</strong></h2>
+		    <br>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="search" method="get" action="{% url 'website:pesquisar' %}">
+			 {% csrf_token %}
+                         <div class="form-group">
+                            <input type="text" class="fieldSerach" placeholder ="Digite o nome da doença" name="q" value="{{ request.GET.q }}">
+			    </input>
+                            <button type="submit" class="submit">OK</button>
+			</div>
+                    </form>
+                    {%if doencas %}
+		    <div class ="col-sm-12 col-md-6" align="left">
+                        {% for doenca in doencas %}
+                        <div>
+			    <br>
+                            <h3><strong>{{doenca.doenca}}</strong></h2>
+                            <ul>
+                                <ul><strong>Descrição: </strong>{{doenca.descricao}}</ul>
+                                <ul><strong>Gravidade: </strong>{{doenca.gravidade}}</ul>
+                                <ul><strong>Sintomas: </strong>{{doenca.sintomas}}</ul>
+                                <ul><strong>Propagação: </strong>{{doenca.propagacao}}</ul>
+                            </ul>
+                            <br>
+                        </div>
+                        {% endfor %}
+	            </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-0 col-md-3">
+        </div>
+    </div>
+</div>
+{% endblock %}

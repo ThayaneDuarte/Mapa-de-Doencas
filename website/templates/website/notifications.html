@@ -1,0 +1,56 @@
+{% extends 'website/base.html' %}
+{% block title %}Notificações{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12" align="center">
+        </div>
+        <div class="col-sm-12" align="center">
+            <h1><strong>Notificações</strong></h1>
+        </div>
+        {% if messages or doencas %}
+            {% if messages %}
+                <h2>Mensagens</h2>
+                {% for message in messages %}
+                    <div class="col-md-12">
+                        <div class="col-sm-12 col-md-8">
+                            <ul>
+                                <li><strong>Título: </strong>{{message.title}}</li>
+                                <li><strong>Mensagem: </strong>{{message.text}}</li>
+                                <li><strong>Resposta: </strong>{{message.answer}}</li>
+                            </ul>
+                            <br>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <a href="{% url 'website:excluirNotificacao'  message.id %}" class="btn btn-primary btn-sm" role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if doencas %}
+                <h2>Alerta de doenças</h2>
+                {% for doenca in doencas %}
+                    <div class="col-md-12">
+                        <div class="col-sm-12 col-md-8">
+                            <ul>
+                                <li><strong>Nome: </strong>{{doenca.doenca}}</li>
+                                <li><strong>Gravidade: </strong>{{doenca.gravidade}}</li>
+                                <li><strong>Descrição: </strong>{{doenca.descricao}}</li>
+                                <li><strong>Sintomas: </strong>{{doenca.sintomas}}</li>
+                                <li><strong>Propagação: </strong>{{doenca.propagacao}}</li>
+                            </ul>
+                            <br>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <h1>Você não possui nenhuma notificação.</h1>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
